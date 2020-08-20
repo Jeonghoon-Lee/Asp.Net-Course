@@ -15,10 +15,10 @@ namespace MyFriends.Pages
     private MyFriendContext db;
     public AddModel(MyFriendContext db) => this.db = db;
 
-    [BindProperty, Required, Display(Name = "Name")]
+    [BindProperty, Required, MinLength(1), MaxLength(50), Display(Name = "Name")]
     public string Name { get; set; }
 
-    [BindProperty, Required(ErrorMessage = "Age must be between 0 and 150."), Range(0, 150), Display(Name = "Age")]
+    [BindProperty, Required(ErrorMessage = "Age must be between 1 and 150."), Range(1, 150), Display(Name = "Age")]
     public int Age { get; set; }
 
     public async Task<IActionResult> OnPostAsync()
