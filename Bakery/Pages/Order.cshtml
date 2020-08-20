@@ -62,6 +62,7 @@
         var price = parseFloat($("#orderPrice").text()).toFixed(2),
             total = $("#orderTotal"),
             orderQty = $("#OrderQuantity");
+
         orderQty.on('change', function () {
             var quantity = parseInt(orderQty.val());
             if (!quantity || quantity < 1) {
