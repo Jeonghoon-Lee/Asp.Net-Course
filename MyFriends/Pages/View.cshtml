@@ -1,0 +1,29 @@
+﻿@page "{id:int}"
+@model MyFriends.Pages.ViewModel
+@{
+  ViewData["Title"] = "Update Friend";
+}
+@* <h1>Update Friend</h1>
+<div>@Model.Friend.Name</div>
+<div>@Model.Friend.Age</div> *@
+
+<h1>Update friend</h1>
+<form method="post">
+  <div class="form-group">
+    <label asp-for="Name"></label>
+    <input asp-for="Name" class="form-control form-control-sm" value=@Model.Name />
+    <span asp-validation-for="Name"></span>
+  </div>
+  <div class="form-group">
+    <label asp-for="Age"></label>
+    <input asp-for="Age" class="form-control form-control-sm" value=@Model.Age />
+    <span asp-validation-for="Age"></span>
+  </div>
+  <p class="actions">
+    <input type="hidden" value=@Model.Id />
+    <button class="btn btn-warning order-button">UPDATE</button>
+  </p>
+</form>
+@section scripts{
+<partial name="_ValidationScriptsPartial"></partial>
+}

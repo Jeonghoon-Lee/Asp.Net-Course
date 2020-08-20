@@ -1,0 +1,33 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<h1 class="display-4">List of My Friends</h1>
+<div class="text-center mt-4">
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Age</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var friend in Model.Friends)
+            {
+                <tr>
+                    <th scope="row">@friend.Id</th>
+                    <td>@friend.Name</td>
+                    <td>@friend.Age</td>
+                    <td>
+                        <a class="btn btn-outline-info" asp-page="/view" asp-route-id="@friend.Id">UPDATE</a>
+                        <a class="btn btn-outline-danger" asp-page-handler="Delete" asp-route-id="@friend.Id" onclick="return confirm('Are you sure you want to delete this?')">DELETE</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
