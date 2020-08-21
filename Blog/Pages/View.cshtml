@@ -1,0 +1,12 @@
+﻿@page "{id:int}"
+@model Blog.Pages.ViewModel
+@{
+  ViewData["Title"] = "View Article";
+}
+<h1>@Model.Article.Title</h1>
+<div class="container mt-3">
+  <p>Posted by @Model.Article.Author.UserName on @Model.Article.TimeStamp.ToString("MMMM dd, yyyy 'at' HH:mm")</p>
+  <div>
+    <textarea class="form-control" rows="10" disabled>@Model.Article.Body</textarea>
+  </div>
+</div>
