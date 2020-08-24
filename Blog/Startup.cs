@@ -72,6 +72,8 @@ namespace Blog
         options.LoginPath = "/Identity/Account/Login";
         options.AccessDeniedPath = "/Identity/Account/AccessDenied";
         options.SlidingExpiration = true;
+
+        options.ReturnUrlParameter = "ReturnUrl";
       });
     }
 

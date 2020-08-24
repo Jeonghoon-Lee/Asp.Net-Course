@@ -16,8 +16,8 @@ namespace Blog.Pages
   [Authorize]
   public class AddArticleModel : PageModel
   {
-    private ApplicationDbContext db;
-    public AddArticleModel(ApplicationDbContext db) => this.db = db;
+    private ApplicationDbContext _db;
+    public AddArticleModel(ApplicationDbContext db) => _db = db;
 
     [BindProperty, Required, MinLength(1), Display(Name = "Title")]
     public string Title { get; set; }
@@ -29,11 +29,11 @@ namespace Blog.Pages
     {
       if (ModelState.IsValid)
       {
-        var newArticle = new Article { Title = Title, Body = Body, Author = db.Users.FirstOrDefault(user => user.UserName == User.Identity.Name) };
+        var newArticle = new Article { Title = Title, Body = Body, Author = _db.Users.FirstOrDefault(user => user.UserName == User.Identity.Name) };
 
         newArticle.TimeStamp = DateTime.Now;
-        db.Add(newArticle);
-        await db.SaveChangesAsync();
+        _db.Add(newArticle);
+        await _db.SaveChangesAsync();
 
         return RedirectToPage("AddArticleSuccess", new { id = newArticle.Id });
       }

@@ -37,7 +37,7 @@
                     <td>@article.Author</td>
                     <td>@article.TimeStamp</td>
                     <td>
-                        <a class="btn btn-outline-info" asp-page="/view" asp-route-id="@article.Id">View</a>
+                        <a class="btn btn-outline-info" asp-page="/article" asp-route-id="@article.Id">View</a>
                         @* JH, 2020-08-21, Checking user permission *@
                         @if (User.Identity.Name == article.Author.UserName)
                         {
@@ -48,4 +48,15 @@
             }
         </tbody>
     </table>
+    @* For pagination *@
+    <div>
+        <ul class="pagination justify-content-center">
+            @for (var i = 1; i <= Model.TotalPages; i++)
+            {
+                <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                    <a asp-page="/index" asp-route-currentpage="@i" class="page-link">@i</a>
+                </li>
+            }
+        </ul>
+    </div>
 </div>

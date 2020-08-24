@@ -82,11 +82,11 @@ namespace Blog.Areas.Identity.Pages.Account
         // This doesn't count login failures towards account lockout
         // To enable password failures to trigger account lockout, set lockoutOnFailure: true
 
-        _logger.LogInformation(Input.Email);
+        // JH, 2020-08-20
+        // Login with email or username
         var result = Input.Email.Contains('@') && (_userManager.FindByEmailAsync(Input.Email).Result != null)
                 ? await _signInManager.PasswordSignInAsync(_userManager.FindByEmailAsync(Input.Email).Result, Input.Password, Input.RememberMe, lockoutOnFailure: false)
                 : await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
-        _logger.LogInformation(result.ToString());
 
         if (result.Succeeded)
         {

@@ -1,0 +1,54 @@
+﻿@page "{id:int}"
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@model Blog.Pages.ArticleModel
+@{
+  ViewData["Title"] = "View Article";
+}
+<h1>@Model.Article.Title</h1>
+<div class="container mt-3">
+  <p>Posted by @Model.Article.Author.UserName on @Model.Article.TimeStamp.ToString("MMMM dd, yyyy 'at' HH:mm")</p>
+  <div>
+    <textarea class="form-control" rows="10" disabled>@Model.Article.Body</textarea>
+  </div>
+</div>
+
+<div class="container mt-4">
+  @* Only signed-in user can comment *@
+  @{ 
+    var commentPlaceHolder = ""; 
+    var disabled = false;
+  }
+  @if (!SignInManager.IsSignedIn(User)) {
+    commentPlaceHolder = "You need to sign in first to leave a comment.";
+    disabled = true;
+  }
+  <form method="post"> 
+    <div class="form-group row mb-2">
+      <label asp-for="CommentBody" class="col-sm-2 control-label h6">Leave comment</label>
+      <div class="col-sm-10">
+        <textarea asp-for="CommentBody" class="form-control" rows="2" placeholder=@commentPlaceHolder disabled=@disabled></textarea>
+        <span asp-validation-for="CommentBody"></span>
+      </div>
+    </div>
+    <div class="form-group row justify-content-end">
+      <div class="col-sm-10">
+        <button class="btn btn-success btn-circle text-uppercase" disabled=@disabled>Add comment</button>
+      </div>
+    </div>
+  </form>
+
+  <div class="list-group list-group-flush">
+    <p class="h6">Previous Comments</p>
+    @foreach (var comment in Model.Comments)
+    {
+      <div class="list-group-item flex-column align-items-start">
+        <p class="mb-1">@comment.Body</p>
+        <footer class="blockquote-footer"><cite class="text-info">@comment.Author</cite> on @comment.TimeStamp.ToString("MMMM dd, yyyy 'at' HH:mm")</footer>
+      </div>
+    }
+  </div>
+</div>
+@section scripts{
+<partial name="_ValidationScriptsPartial"></partial>
+}
