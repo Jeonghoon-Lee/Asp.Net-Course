@@ -8,10 +8,12 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
-using Blog.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+
+using Blog.Data;
+using Blog.Services;
 
 namespace Blog
 {
@@ -33,6 +35,11 @@ namespace Blog
       services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
           .AddEntityFrameworkStores<ApplicationDbContext>();
       services.AddRazorPages();
+
+      // JH, 2020-08-25
+      // Add services
+      services.AddMvc();
+      services.AddTransient<IArticleService, ArticleService>();
 
       // JH. 2020-08-20
       // Modified some fields

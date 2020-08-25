@@ -1,0 +1,53 @@
+﻿@page "{handler?}/{currentpage?}"
+@model Blog.Pages.ListModel
+@{
+}
+<h1 class="display-4">List of Articles</h1>
+<div class="text-center mt-4">
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Content</th>
+                <th scope="col">Author</th>
+                <th scope="col">Date created</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody id="article-list"></tbody>
+    </table>
+    @* For pagination *@
+    <div>
+      <ul class="pagination justify-content-center">
+        @for (var i = 1; i <= Model.TotalPages; i++)
+        {
+            <li class="page-item @(i == Model.CurrentPage ? "active" : "")" value="@i">
+                @* <a asp-page="/index" asp-route-currentpage="@i" class="page-link">@i</a> *@
+                <a class="page-link">@i</a>
+            </li>
+        }
+      </ul>
+    </div>
+</div>
+
+
+@section scripts{
+  <script>
+    const loadArticles = (currentPage) => {
+      $('#article-list').load('/list/ArticlePartial/' + currentPage);
+    }
+
+    $(function () {
+      $('.page-item').on('click', function () {
+        const currentPage = $(this).attr('value');
+        loadArticles(currentPage);
+      });
+    });
+
+  // JH, 2020-08-25
+  // run once when page loaded
+  // load first page
+  $(document).ready(loadArticles(1));
+  </script>
+}

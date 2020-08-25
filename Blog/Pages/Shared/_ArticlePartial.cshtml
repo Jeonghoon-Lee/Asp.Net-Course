@@ -1,0 +1,28 @@
+@using Blog.Models
+@model List<Article>
+
+@foreach (var article in Model)
+{
+  <tr>
+    <th scope="row">@article.Id</th>
+    <td>@article.Title</td>
+
+    @* JH, 2020-08-20, Display reduced length of content *@
+    @if (@article.Body.Length > 20) {
+        <td class="text-left">@article.Body.Substring(0, 20)...</td>
+    } else {
+        <td class="text-left">@article.Body</td>
+    }
+
+    <td>@article.Author</td>
+    <td>@article.TimeStamp</td>
+    <td>
+      <a class="btn btn-outline-info" asp-page="/article" asp-route-id="@article.Id">View</a>
+      @* JH, 2020-08-21, Checking user permission *@
+      @if (User.Identity.Name == article.Author.UserName)
+      {
+          <a class="btn btn-outline-danger" asp-page-handler="Delete" asp-route-id="@article.Id" onclick="return confirm('Are you sure you want to delete this?')">DELETE</a>
+      }
+    </td>
+  </tr>
+}
